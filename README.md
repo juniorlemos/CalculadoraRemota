@@ -1,2 +1,2 @@
 # CalculadoraRemota
-Calculadora remota em java
+Calculadora remota em java usando sockets
