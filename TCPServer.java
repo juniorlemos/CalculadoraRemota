@@ -1,3 +1,5 @@
+package sd;
+
 import java.net.*;
 import java.io.*;
 public class TCPServer {
@@ -27,8 +29,83 @@ class Connection extends Thread {
 	public void run(){
 		try {			                 // an echo server
 
-			String data = in.readUTF();	                  // read a line of data from the stream
-			out.writeUTF(data);
+			
+			
+			float n1,n2,res = 0;
+
+			
+			boolean zero=false;
+			String data = in.readUTF();
+			String array[] = data.split(";");
+			
+			
+			
+			String var =array[1];
+
+			 System.out.println("valor"+var);
+			switch (var) {
+			case "+":
+				
+				
+				n1=Float.parseFloat(array[0]);
+				n2=Float.parseFloat(array[2]);
+				
+				res=n1+n2;
+				System.out.println(res);
+				break;
+				
+		case "-":
+				
+				n1=Float.parseFloat(array[0]);
+				n2=Float.parseFloat(array[2]);
+				
+				res=n1-n2;
+				System.out.println(res);
+				
+				break;
+					
+		case "*":
+			
+			n1=Float.parseFloat(array[0]);
+			n2=Float.parseFloat(array[2]);
+			
+			res=n1*n2;
+			System.out.println(res);
+			
+			break;		
+				
+		case "/":
+			
+			n1=Float.parseFloat(array[0]);
+			n2=Float.parseFloat(array[2]);
+			
+			if (n2==0) {
+				
+			zero=true;
+			break;
+				
+			}
+			res=n1/n2;
+			System.out.println(res);
+			
+			break;	
+			default:
+				break;
+			}
+                			
+			data=String.valueOf(res);
+			
+			if (zero) {
+			System.out.println();
+			out.writeUTF("Nao existe divisão por zero");
+			zero = false;
+			}
+			else {
+				out.writeUTF("resultado: "+data);
+		}
+			
+			// read a line of data from the stream
+		
 		}catch (EOFException e){System.out.println("EOF:"+e.getMessage());
 		} catch(IOException e) {System.out.println("readline:"+e.getMessage());
 		} finally{ try {clientSocket.close();}catch (IOException e){/*close failed*/}}
